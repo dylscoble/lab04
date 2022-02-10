@@ -12,3 +12,38 @@ library(knitr)
 library(broom)
 ```
 
+
+1. There are 1,258 observations in the new dataset, after we filter for observations that have a carat weight of 0.5.
+```{r}
+data <- diamonds %>% 
+  filter(carat == 0.5)
+glimpse(data)
+```
+
+
+2. As shown in the histogram, the two levels of cut with the smallest number of observations are "few" and "good".
+
+```{r}
+ggplot(data = data, aes(x = cut)) +
+  geom_bar() +
+  labs(title = "Histogram of Cut")
+```
+
+# Exercise 3
+```{r}
+lumpeddata <- data %>%
+  mutate(cut = fct_lump_n(cut, n=3))
+
+ggplot(data = lumpeddata, aes(x = cut)) +
+  geom_bar() +
+  labs(title = "Histogram of Cut")
+```
+
+
+```{r}
+
+```
+
+
+
+
