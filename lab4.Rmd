@@ -1,5 +1,5 @@
 ---
-title: "lab4"
+title: "Stat 108: Lab 4"
 author: "Dylan Scoble"
 date: "2/9/2022"
 output: html_document
@@ -13,7 +13,8 @@ library(broom)
 ```
 
 
-1. There are 1,258 observations in the new dataset, after we filter for observations that have a carat weight of 0.5.
+### Exercise 1
+There are 1,258 observations in the new dataset, after we filter for observations that have a carat weight of 0.5.
 ```{r}
 data <- diamonds %>% 
   filter(carat == 0.5)
@@ -21,7 +22,8 @@ glimpse(data)
 ```
 
 
-2. As shown in the histogram, the two levels of cut with the smallest number of observations are "few" and "good".
+### Exercise 2
+As shown in the histogram, the two levels of cut with the smallest number of observations are "few" and "good".
 
 ```{r}
 ggplot(data = data, aes(x = cut)) +
@@ -29,7 +31,7 @@ ggplot(data = data, aes(x = cut)) +
   labs(title = "Histogram of Cut")
 ```
 
-# Exercise 3
+### Exercise 3
 ```{r}
 lumpeddata <- data %>%
   mutate(cut = fct_lump_n(cut, n=3))
@@ -39,11 +41,30 @@ ggplot(data = lumpeddata, aes(x = cut)) +
   labs(title = "Histogram of Cut")
 ```
 
-
+### Exercise 4
 ```{r}
+plot <- ggplot(data = lumpeddata, aes(x = cut, y = price)) +
+  geom_boxplot() +
+  labs(title = "Relationship between Price and Cut",
+       x = "Cut",
+       y = "Price")
 
+plot
 ```
 
 
+### Exercise 5
+The output of this code is a table that shows the mean, standard deviation, and number of observations of price for each category of cut.
+```{r}
+lumpeddata %>%
+  group_by(cut) %>% 
+  summarise(mean = mean(price),
+            std_dev = sd(price),
+            num_observations = n()
+  )
+```
+
+### Exercise 6
+For Diamonds that are 0.5 carats, there is a minor linear relationship between cut and price. As cut increases from less than very good, to very good, to premium, to ideal, the mean price of that category also increases.
 
 
