@@ -67,4 +67,79 @@ lumpeddata %>%
 ### Exercise 6
 For Diamonds that are 0.5 carats, there is a minor linear relationship between cut and price. As cut increases from less than very good, to very good, to premium, to ideal, the mean price of that category also increases.
 
+### Exercise 7
+
+The following code will test the normality assumption. The output of this code allows me to conclude that the normality assumption is satisfied because each plot folllows a relatively normal distribution.
+```{r}
+badcut <- lumpeddata %>%
+  filter(cut == "Other")
+ggplot(data = badcut, aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Less than Very Good Prices",
+       x = "Price")
+
+verygoodcut <- lumpeddata %>%
+  filter(cut == "Very Good")
+ggplot(data = verygoodcut, aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Very Good Prices",
+       x = "Price")
+
+premiumcut <- lumpeddata %>%
+  filter(cut == "Premium")
+ggplot(data = premiumcut, aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Premium Prices",
+       x = "Price")
+
+idealcut <- lumpeddata %>%
+  filter(cut == "Ideal")
+ggplot(data = idealcut, aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Ideal Prices",
+       x = "Price")
+
+```
+
+The independence assumption is [not] satisfied because []
+
+The following code will test the constant variance assumption.
+```{r}
+model <- lm(price ~ cut, data = lumpeddata)
+tidy(model) %>% 
+  kable(format="markdown", digits=3)
+lumpeddata <- lumpeddata %>% 
+  mutate(resid = residuals(model))
+
+badcut <- lumpeddata %>%
+  filter(cut == "Other")
+ggplot(data = badcut, aes(x = price, y = resid)) +
+  geom_point()
+
+
+verygoodcut <- lumpeddata %>%
+  filter(cut == "Very Good")
+ggplot(data = verygoodcut, aes(x = price, y = resid)) +
+  geom_point()
+
+premiumcut <- lumpeddata %>%
+  filter(cut == "Premium")
+ggplot(data = premiumcut, aes(x = price, y = resid)) +
+  geom_point()
+
+idealcut <- lumpeddata %>%
+  filter(cut == "Ideal")
+ggplot(data = idealcut, aes(x = price, y = resid)) +
+  geom_point()
+```
+The constant variance assumption is not satisfied because for each level of price, there is not a cloud-shaped pattern to represent the relationship  between cut and price.
+
+
+### Exercise 8
+
+```{r}
+model <- lm(price ~ cut, data = lumpeddata)
+
+kable(anova(model), format="markdown",digits=3)
+```
 
