@@ -348,8 +348,7 @@ ggplot(data = idealcut, aes(x = price, y = resid)) +
 <div id="exercise-8" class="section level3">
 <h3>Exercise 8</h3>
 <pre class="r"><code>model &lt;- lm(price ~ cut, data = lumpeddata)
-
-kable(anova(model), format=&quot;markdown&quot;,digits=3)</code></pre>
+kable(anova(model), format=&quot;markdown&quot;,digits=6)</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -380,6 +379,73 @@ kable(anova(model), format=&quot;markdown&quot;,digits=3)</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
+<div id="exercise-9" class="section level3">
+<h3>Exercise 9</h3>
+<p>According to the ANOVA table above, the sample variance for price is 120180.6.</p>
+</div>
+<div id="exercise-10" class="section level3">
+<h3>Exercise 10</h3>
+<p>The output of the code below shows the variance of price for each level of cut. For an ideal cut, the variance of price is 9.893. For a premium cut, the variance of price is 19.384. For a very good cut, the variance of price is 19.787. For any other cut, the variance of price is 20.181.</p>
+<pre class="r"><code>tidy(model) %&gt;% 
+  kable(format=&quot;markdown&quot;, digits=3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">1492.438</td>
+<td align="right">9.893</td>
+<td align="right">150.852</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">cut.L</td>
+<td align="right">-82.101</td>
+<td align="right">20.181</td>
+<td align="right">-4.068</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">cut.Q</td>
+<td align="right">-155.569</td>
+<td align="right">19.787</td>
+<td align="right">-7.862</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">cut.C</td>
+<td align="right">-84.678</td>
+<td align="right">19.384</td>
+<td align="right">-4.368</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>summary(model)$coef[,2] </code></pre>
+<pre><code>## (Intercept)       cut.L       cut.Q       cut.C 
+##    9.893372   20.181275   19.786744   19.384185</code></pre>
+</div>
+<div id="exercise-11" class="section level3">
+<h3>Exercise 11</h3>
+<p>The null hypothesis states that there is not a statistically significant difference in price between each level of cut. The alternative hypothesis states that there is a statistically significant difference in price between each level of cut. In a mathematical sense, <span class="math inline">\(H_0: mean(price: cut = very good) = mean(price: cut = premium) = mean(price: cut = ideal) = mean(price: cut = other)\)</span></p>
+<p><span class="math inline">\(H_A: !(mean(price: cut = very good) = mean(price: cut = premium) = mean(price: cut = ideal) = mean(price: cut = other))\)</span></p>
+</div>
+<div id="exercise-12" class="section level3">
+<h3>Exercise 12</h3>
+<p>Because the F statistic is very high in our ANOVA analysis, the p-value is low. Therefore, we can reject the null hypothesis that cut does not affect price and accept the alternative hypothesis.</p>
+</div>
+<div id="exercise-13" class="section level3">
+<h3>Exercise 13</h3>
+<p>If the cut is less than very good, we see that this is a major indicator of a lower price. There is also more outliers and a higher variance among diamonds that havea cut of less than very good.</p>
 </div>
 
 

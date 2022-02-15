@@ -2,7 +2,7 @@
 title: "Stat 108: Lab 4"
 author: "Dylan Scoble"
 date: "2/9/2022"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -139,7 +139,35 @@ The constant variance assumption is not satisfied because for each level of pric
 
 ```{r}
 model <- lm(price ~ cut, data = lumpeddata)
+kable(anova(model), format="markdown",digits=6)
 
-kable(anova(model), format="markdown",digits=3)
 ```
 
+### Exercise 9
+
+According to the ANOVA table above, the sample variance for price is 120180.6.
+
+### Exercise 10
+
+The output of the code below shows the variance of price for each level of cut. For an ideal cut, the variance of price is 9.893. For a premium cut, the variance of price is 19.384. For a very good cut, the variance of price is 19.787. For any other cut, the variance of price is 20.181.
+
+```{r}
+tidy(model) %>% 
+  kable(format="markdown", digits=3)
+
+summary(model)$coef[,2] 
+```
+
+### Exercise 11
+
+The null hypothesis states that there is not a statistically significant difference in price between each level of cut. The alternative hypothesis states that there is a statistically significant difference in price between each level of cut. In a mathematical sense, $H_0: mean(price: cut = very good) = mean(price: cut = premium) = mean(price: cut = ideal) = mean(price: cut = other)$
+
+$H_A: !(mean(price: cut = very good) = mean(price: cut = premium) = mean(price: cut = ideal) = mean(price: cut = other))$
+
+### Exercise 12
+
+Because the F statistic is very high in our ANOVA analysis, the p-value is low. Therefore, we can reject the null hypothesis that cut does not affect price and accept the alternative hypothesis.
+
+### Exercise 13
+
+If the cut is less  than very good, we see that this is a major indicator of a lower price. There is also more outliers and a higher variance among diamonds that havea cut of less than very good.
